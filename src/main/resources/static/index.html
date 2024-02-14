@@ -1,13 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Oblig1</title>
 
-kmmøol
-    nibi
+
+    <style>
+
+        h1 {
+            font-weight: bold;
+            color: black;
+            font-size: 30px;
+        }
+
+        h2 {
+            font-weight: bold;
+            color: black;
+            font-size: 20px;
+        }
+
+    </style>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+
+        //JAVASCRIPT DELEN
+
+        //variabel av personRegister
+        const personRegister=[];
+
+        function visPersonRegister(){
+            // skriv ut
+
+            let ut = "<table><tr>" +
+                "<th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnr</th><th>Epost</th>" +
+                "</tr>";
+
+            for (let p of personRegister){
+                ut+="<tr>";
+                ut+="<td>"+p.film+"</td><td>"+p.antall+"</td><td>"+p.fornavn+"</td><td>"+p.etternavn+"</td><td>"+p.telefonnr+"</td><td>"+p.epost+"</td>";
+                ut+="</tr>";
+            }
+            $("#personRegister").html(ut);
+        }
+
+        function registrer(){
+            const film = $("#film").val();
+            const antall = $("#antall").val();
+            const fornavn = $("#fornavn").val();
+            const etternavn = $("#etternavn").val();
+            const telefonnr = $("#telefonnr").val();
+            const epost = $("#epost").val();
+
+            const person = {
+                film : film,
+                antall :  antall,
+                fornavn : fornavn,
+                etternavn : etternavn,
+                telefonnr : telefonnr,
+                epost : epost
+            };
+
+            personRegister.push(person);
+
+            //nullstill inputboksene
+            $('input').val('');
+
+            visPersonRegister()}
+
+
+        //slett knapp funksjon.
+        function slettKnapp() {
+            personRegister.length = 0;
+            visPersonRegister();
+        }
+
+
+        //Funksjon for at rød error melding skal appear foran input text fieldene, når de er tomme og kjøpBillett knappen er trykket.
+        function registrer(){
+            const film = $("#film").val();
+            const antall = $("#antall").val();
+            const fornavn = $("#fornavn").val();
+            const etternavn = $("#etternavn").val();
+            const telefonnr = $("#telefonnr").val();
+            const epost = $("#epost").val();
+
+            // check if any field is empty
+            if (film === '' || antall === '' || fornavn === '' || etternavn === '' || telefonnr === '' || epost === '') {
+                // create error message
+                const errorMessage = "<span style='color: red; font-size: 14px'>Fyll inn alle feltene</span>";
+                // display error message next to empty input fields
+                if (film === '') { $("#film").after(errorMessage); }
+                if (antall === '') { $("#antall").after(errorMessage); }
+                if (fornavn === '') { $("#fornavn").after(errorMessage); }
+                if (etternavn === '') { $("#etternavn").after(errorMessage); }
+                if (telefonnr === '') { $("#telefonnr").after(errorMessage); }
+                if (epost === '') { $("#epost").after(errorMessage); }
+            } else {
+                const person = {
+                    film : film,
+                    antall :  antall,
+                    fornavn : fornavn,
+                    etternavn : etternavn,
+                    telefonnr : telefonnr,
+                    epost : epost
+                };
+                personRegister.push(person);
+                //nullstill inputboksene
+                $('input').val('');
+                visPersonRegister();
+            }
+        }
+
+    </script>
+
+
+
 </head>
 <body>
+<!-- HTML DELEN -->
+
+<!-- dropdown scroll liste for filmene !-->
+<h1> Bestilling av kinobiletter</h1>
+
+<p> Velg film: <select id = "film" onchange = "velg();">
+    <option> Velg film her</option>
+    <option>Prinsesse 1</option>
+    <option> Prinsesse 2</option>
+    <option> Prinsesse 3</option>
+</select></p>
+
+<!-- antall input field !-->
+<p> Antall <input
+        type="text"
+        id="antall"
+        min="1"
+        max="50"
+        style="width: 30px"
+        onchange="selectantall()">
+</p>
+
+
+<table>
+
+    <!-- Input text fields som vises opp på nettsiden !-->
+    <tr><td>Fornavn</td><td><input type="text" id="fornavn"/></td></tr>
+    <tr><td>Etternavn</td><td><input type="text" id="etternavn"/></td></tr>
+    <tr><td>Telefonnr</td><td><input type="text" id="telefonnr"/></td></tr>
+    <tr><td>Epost</td><td><input type="text" id="epost"/></td></tr>
+
+    <!-- Kjøp billett knapp !-->
+    <tr><td><button onclick="registrer()">Kjøp billett</button></td></tr>
+</table>
+
+<h2> Alle billetter</h2>
+
+
+<!-- Slett alle billetter knapp -->
+<button onclick="slettKnapp()">Slett alle billetter</button>
+<div id="personRegister"></div>
+
+
 
 </body>
 </html>
